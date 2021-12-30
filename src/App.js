@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+import {useEffect, useState, React} from 'react';
+import Favorites from './Favorites';
+import FilterContainer from './FilterContainer';
+import Footer from './Footer';
+import Header from './Header';
+import MovieSpace from './MovieSpace';
+import MovieContainer from './MovieContainer';
 import './App.css';
 
 function App() {
+const [movieList,setMovieList]= useState([]);
+
+  useEffect(()=>{
+    fetch("http://www.omdbapi.com/?i=tt3896198&apikey=8779b1ab")
+    .then((r) => r.json())
+    .then((movies) => setMovieList(movies))
+}, []);
+console.log(movieList)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+      <FilterContainer/>
+      <Favorites/>
+      <MovieSpace/>
+        <MovieContainer/>
+      <MovieSpace/>
+      <Footer/>
     </div>
   );
 }
